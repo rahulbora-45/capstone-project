@@ -1,0 +1,21 @@
+# Numerical computation
+numpy
+
+# Geospatial raster processing
+rasterio
+
+# Data handling
+pandas
+
+# Visualization
+matplotlib
+
+# Image processing
+opencv-python
+
+# Jupyter notebooks
+jupyter
+ipykernel
+
+# Progress bars
+tqdm

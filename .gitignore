@@ -1,0 +1,108 @@
+
+# ========================================
+# Python
+# ========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# ========================================
+# IDE and editor
+# ========================================
+.vscode/
+.idea/
+
+# ========================================
+# Dataset files - GeoTIFF and satellite data
+# ========================================
+*.tif
+*.tiff
+*.vrt
+*.jp2
+*.img
+*.aux
+*.ovr
+
+# Original archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+
+# Dataset storage directories
+data/raw/*
+!data/raw/.gitkeep
+
+data/extracted/*
+!data/extracted/.gitkeep
+
+data/processed/*
+!data/processed/.gitkeep
+
+# ========================================
+# Model checkpoints and weights
+# ========================================
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.onnx
+*.safetensors
+*.weights
+
+# ========================================
+# Experiment outputs
+# ========================================
+mlruns/
+mlartifacts/
+wandb/
+runs/
+lightning_logs/
+
+# ========================================
+# Logs and temporary files
+# ========================================
+*.log
+*.tmp
+*.temp
+temp/
+tmp/
+
+# ========================================
+# OS-specific files
+# ========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================================
+# Environment variables and secrets
+# ========================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ========================================
+# Database files
+# ========================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ========================================
+# Generated outputs
+# ========================================
+output/
+cache/
