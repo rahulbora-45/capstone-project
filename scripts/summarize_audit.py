@@ -1,8 +1,8 @@
 
 import pandas as pd
 
-bands = pd.read_csv("audit_band_stats.csv")
-files = pd.read_csv("audit_file_summary.csv")
+bands = pd.read_csv("results/audit/audit_band_stats.csv")
+files = pd.read_csv("results/audit/audit_file_summary.csv")
 
 print("\n=== 1. Files by resolution group ===")
 print(

@@ -1,0 +1,5 @@
+dataset,10m_files,5m_files,pairs_checked,missing_5m,missing_10m,alignment_failures,pairing_status,alignment_status,final_status
+ANJI,2312,2312,2312,0,0,0,PASS,PASS,PASS
+ARM,15859,15859,15859,0,0,0,PASS,PASS,PASS
+BAMBENW2,5769,5769,5769,0,0,0,PASS,PASS,PASS
+ES-IC3XG,8822,8822,8822,0,0,0,PASS,PASS,PASS
