@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-**Phase 7 — Model Development**
+**Phase 8 — Model Training**
 
 **Status:** Pending
 
@@ -18,7 +18,7 @@
 | Phase 4 — Data Quality Audit | Completed |
 | Phase 5 — Data Preprocessing | Completed |
 | Phase 6 — Dataset Preparation | Completed |
-| Phase 7 — Model Development | Pending |
+| Phase 7 — Model Development | Completed |
 | Phase 8 — Model Training | Pending |
 | Phase 9 — Model Evaluation | Pending |
 | Phase 10 — Final Analysis | Pending |
@@ -166,13 +166,170 @@ The validated model-ready LR/HR dataset is ready for the Model Development phase
 
 ---
 
+## Phase 7 — Model Development
+
+**Status:** Completed
+
+### Completed Work
+
+- Defined the final machine learning task as 4-band multispectral 2× super-resolution.
+- Confirmed the final model input:
+  - 4-band B, G, R, NIR
+  - 10 m spatial resolution
+  - `128 × 128`
+- Confirmed the final model target:
+  - 4-band B, G, R, NIR
+  - 5 m spatial resolution
+  - `256 × 256`
+- Confirmed the scale factor: **2×**.
+- Designed and implemented a residual CNN super-resolution architecture.
+- Created `src/models/super_resolution_cnn.py`.
+- Implemented:
+  - Initial feature extraction
+  - Four residual blocks
+  - Feature refinement
+  - PixelShuffle 2× upsampling
+  - Four-band output reconstruction
+- Verified model input/output dimensions:
+  - Input: `(1, 4, 128, 128)`
+  - Output: `(1, 4, 256, 256)`
+- Verified the model using a real normalized LR satellite image.
+- Verified the model using a real LR/HR training pair.
+- Confirmed finite model predictions and finite L1 loss.
+- Created the model training pipeline:
+  - `src/models/train_super_resolution.py`
+- Configured the training pipeline to use:
+  - L1 loss
+  - Adam optimizer
+  - CPU execution
+  - Reproducible seed: 42
+  - Best-model checkpointing based on validation loss
+- Created the model evaluation pipeline:
+  - `src/models/evaluate_super_resolution.py`
+- Created prediction inspection:
+  - `src/models/inspect_super_resolution_prediction.py`
+- Trained the model for 3 epochs.
+- Saved the best checkpoint:
+  - `results/model_training/models/best_model.pth`
+- Confirmed the best checkpoint was from epoch 3.
+- Created training history:
+  - `results/model_training/training_history.json`
+- Evaluated the model on all 378 held-out test samples.
+- Evaluated model performance in normalized space.
+- Added original radiometric-space evaluation using the shared training normalization statistics.
+- Preserved the normalized evaluation metrics while adding radiometric metrics.
+- Saved final Phase 7 evaluation results:
+  - `results/model_evaluation/test_evaluation.json`
+
+### Model Architecture
+
+The developed model contains:
+
+- Input channels: 4
+- Output channels: 4
+- Feature channels: 64
+- Residual blocks: 4
+- Upscaling method: PixelShuffle
+- Scale factor: 2×
+- Total parameters: **484,740**
+- Trainable parameters: **484,740**
+
+### Phase 7 Training Result
+
+The 3-epoch development run produced:
+
+- Best checkpoint epoch: **3**
+- Best validation L1 loss: **0.181112**
+
+Training loss decreased across the three epochs, and validation loss also continued to improve:
+
+| Epoch | Training Loss | Validation Loss |
+|---|---:|---:|
+| 1 | 0.238552 | 0.197748 |
+| 2 | 0.189601 | 0.186061 |
+| 3 | 0.183255 | **0.181112** |
+
+### Phase 7 Test Evaluation
+
+Evaluation was performed on the complete held-out test set of 378 samples.
+
+#### Normalized-Space Metrics
+
+| Metric | Result |
+|---|---:|
+| MAE | **0.187928** |
+| RMSE | **0.272454** |
+| PSNR | **31.8522 dB** |
+| SSIM | **0.817167** |
+
+#### Original Radiometric-Space Metrics
+
+| Metric | Result |
+|---|---:|
+| MAE | **77.503309** |
+| RMSE | **121.966275** |
+| PSNR | **31.6207 dB** |
+
+#### Per-Band Normalized Metrics
+
+| Band | MAE | RMSE | SSIM |
+|---|---:|---:|---:|
+| B | 0.203909 | 0.291385 | 0.775092 |
+| G | 0.199023 | 0.285346 | 0.794277 |
+| R | 0.170214 | 0.258539 | 0.816827 |
+| NIR | 0.178568 | 0.241764 | 0.882472 |
+
+#### Per-Band Original Radiometric Metrics
+
+| Band | MAE | RMSE |
+|---|---:|---:|
+| B | 47.832222 | 68.352109 |
+| G | 53.470048 | 76.661730 |
+| R | 64.271125 | 97.621673 |
+| NIR | 144.439840 | 195.558233 |
+
+### Phase 7 Validation
+
+The model development pipeline was successfully validated through:
+
+- Model architecture shape validation
+- Real-data forward-pass validation
+- Real LR/HR loss validation
+- Training pipeline execution
+- Validation-loss monitoring
+- Best-checkpoint creation
+- Complete test-set evaluation
+- Normalized-space evaluation
+- Original radiometric-space evaluation
+- Per-band evaluation
+- Prediction inspection
+
+### Phase 7 Milestone
+
+**Model development is complete.**
+
+The project now has a working and evaluated 4-band 2× multispectral super-resolution baseline model.
+
+The current best checkpoint is:
+
+`results/model_training/models/best_model.pth`
+
+The model is ready for the dedicated Model Training phase.
+
+---
+
 ## Next Milestone
 
-Begin Model Development for the 2× multispectral super-resolution task.
+Begin **Phase 8 — Model Training**.
 
-The model will use:
+The Phase 8 objective is to conduct the planned model training experiments using the validated model architecture and model-ready dataset.
+
+The training task remains:
 
 - Input: 4-band B, G, R, NIR, 10 m, `128 × 128`
 - Target: 4-band B, G, R, NIR, 5 m, `256 × 256`
 - Scale factor: 2×
+- Training split: 1,583 pairs
+- Validation split: 351 pairs
+- Test split: 378 pairs
 - Objective: preserve spectral and radiometric fidelity for downstream applications such as land cover classification and NDVI analysis.
